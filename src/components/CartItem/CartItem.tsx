@@ -12,30 +12,33 @@ function CartItem(props: CartItemProps) {
     };
 
     const decrease = () => {
-        dispatch(cartActions.add(props.id));
+        dispatch(cartActions.remove(props.id));
     };
 
     const remove = () => {
-        dispatch(cartActions.add(props.id));
+        dispatch(cartActions.delete(props.id));
     };
 
     return (
             <div className={styles["item"]}>
-                    <div className={styles["image"]} style={{ backgroundImage: `url(${props.image})` }}></div>
+                    <div
+                        className={styles["image"]}
+                        style={{ backgroundImage: `url(/food/food${props.id}.png)` }}>
+                    </div>
                     <div className={styles["description"]}>
-                        <span className={styles["name"]}>{props.name}</span>
-                        <span className={styles["currency"]}>{props.price}&nbsp;₽</span>
+                        <span className={styles["title"]}>{props.name}</span>
+                        <span className={styles["price"]}>{props.price}&nbsp;₽</span>
                     </div>
                     <div className={styles["actions"]}>
-                        <button className={styles["button"]} onClick={decrease}>
-                            <img src="/cart-button-icon.svg" alt="Удилть из корзины" />
+                        <button className={styles["minus"]} onClick={decrease}>
+                            <img src="/minus-icon.svg" alt="Удилть из корзины" />
                         </button>
-                        <span>{props.count}</span>
-                        <button className={styles["button"]} onClick={increase}>
-                            <img src="/cart-button-icon.svg" alt="Добавить в корзину" />
+                        <span className={styles["number"]}>{props.count}</span>
+                        <button className={styles["plus"]} onClick={increase}>
+                            <img src="/plus-icon.svg" alt="Добавить в корзину" />
                         </button>
                         <button className={styles["remove"]} onClick={remove}>
-                            <img src="/cart-button-icon.svg" alt="Удалить все" />
+                            <img src="/delete-icon.svg" alt="Удалить все" />
                         </button>
                     </div>
             </div>
