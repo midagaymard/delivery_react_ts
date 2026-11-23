@@ -1,1 +1,1 @@
-export const PREFIX = "https://purpleschool.ru/pizza-api-demo";
+export const PREFIX = import.meta.env.VITE_API_URL || "https://purpleschool.ru/pizza-api-demo";
