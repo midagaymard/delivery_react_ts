@@ -23,8 +23,7 @@ export default async function handler(req, res) {
         };
 
         if (!['GET', 'HEAD'].includes(req.method) && req.body) {
-            const bodyData = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
-            fetchOptions.body = bodyData;
+            fetchOptions.body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
         } else if (!['GET', 'HEAD'].includes(req.method)) {
             const buffers = [];
             for await (const chunk of req) {
