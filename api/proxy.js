@@ -14,17 +14,21 @@ export default async function handler(req, res) {
     const targetUrl = `https://purpleschool.ru/pizza-api-demo${cleanPath}`;
 
     try {
-        const fetchOptions = {
-            method: req.method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
         };
 
-        if (!['GET', 'HEAD'].includes(req.method) && req.body) {
-            fetchOptions.body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
-        } else if (!['GET', 'HEAD'].includes(req.method)) {
+        if (req.headers.authorization) {
+            headers['Authorization'] = req.headers.authorization;
+        }
+
+        const fetchOptions = {
+            method: req.method,
+            headers: headers,
+        };
+
+        if (!['GET', 'HEAD'].includes(req.method)) {
             const buffers = [];
             for await (const chunk of req) {
                 buffers.push(chunk);
@@ -37,7 +41,6 @@ export default async function handler(req, res) {
 
         res.status(response.status).send(data);
     } catch (error) {
-        console.error('Proxy error:', error);
         res.status(500).json({ error: 'Ошибка прокси', details: error.message });
     }
 }
